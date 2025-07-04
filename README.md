@@ -40,6 +40,13 @@ _Add screenshots of your app’s main screen view here_
 
 ---
 
+## 🎥 Demo Video
+
+_A demo video showcasing SD News in action:_
+
+https://github.com/user-attachments/assets/8eb41a8c-8dae-4c41-8142-59dfd0222328
+
+---
 
 ## ⚙️ Tech Stack
 
