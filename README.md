@@ -8,7 +8,7 @@ Unlike most other cluttered news apps, SD News delivers information in a clean a
 ## ✨ Features
 
 - 📄 Fetches news articles via **RSS feeds**
-- Up and down scroll buttons
+- ↕️ Up and down scroll buttons
 - 📲 Modern Android UI with RecyclerView  
 - 🔄 Pull-to-refresh functionality  
 - 🎯 Clean, minimal, straight to the point..!
@@ -32,7 +32,6 @@ This makes SD News more sustainable, faster, and simpler to maintain.
 
 ## 📷 Screenshots
 
-_Add screenshots of your app’s main screen view here_
 
 | Home Screen |
 |:------------|
@@ -42,7 +41,6 @@ _Add screenshots of your app’s main screen view here_
 
 ## 🎥 Demo Video
 
-_A demo video showcasing SD News in action:_
 
 https://github.com/user-attachments/assets/8eb41a8c-8dae-4c41-8142-59dfd0222328
 
