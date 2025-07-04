@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">SD News</string>
+    <string name="txtTitle">Title</string>
+    <string name="txtDate">Date</string>
+    <string name="txtContent">Content</string>
+    <string name="upButton">Up</string>
+    <string name="downButton">Down</string>
+</resources>
