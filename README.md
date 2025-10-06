@@ -56,9 +56,9 @@ https://github.com/user-attachments/assets/8eb41a8c-8dae-4c41-8142-59dfd0222328
 
 ---
 
-## 📦 Coming Soon: Google Play Store Release!
+## 📦  Google Play Store Release!
 
-**I’m planning to launch SD News on the Google Play Store.**  
+**Launched SD News on the Google Play Store!!**  
 Stay tuned for updates and improvements — your feedback will help shape future releases.
 
 ---
