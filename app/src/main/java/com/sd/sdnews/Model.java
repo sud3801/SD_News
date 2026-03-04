@@ -13,7 +13,6 @@ public class Model {
         this.publisher = publisher;
         this.date = date;
         this.content = content;
-        this.publisher = publisher;
         this.link=link;
     }
 
