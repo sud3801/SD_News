@@ -6,12 +6,15 @@ public class Model {
     String content;
     String publisher;
 
-    public Model(String title, String publisher, String date, String content) {
+    String link;
+
+    public Model(String title, String publisher, String date, String content, String link) {
         this.title = title;
         this.publisher = publisher;
         this.date = date;
         this.content = content;
         this.publisher = publisher;
+        this.link=link;
     }
 
     public String getTitle() {
@@ -25,4 +28,6 @@ public class Model {
     }
 
     public String getContent() {return content;}
+
+    public String getLink(){return link;}
 }

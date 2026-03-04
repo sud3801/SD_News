@@ -36,6 +36,14 @@ public class RecylerViewAdapter extends RecyclerView.Adapter<RecylerViewAdapter.
         holder.txtPublisher.setText(Model.get(position).getPublisher());
         holder.txtDate.setText(Model.get(position).getDate());
         holder.txtContent.setText(Model.get(position).getContent());
+        //title click open
+        holder.txtTitle.setOnClickListener(v->{
+            String url = currentItem.getLink();
+            if(url!=null && !url.isEmpty()){
+                Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse(url));
+                v.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override

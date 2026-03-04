@@ -28,6 +28,7 @@ public class RSSFeedParser {
             String pubName = null;
             String pubDate = null;
             String description = null;
+            String link = null;
             boolean insideItem = false;
 
             while (eventType != XmlPullParser.END_DOCUMENT) {
@@ -45,13 +46,17 @@ public class RSSFeedParser {
                             } else if (tagName.equalsIgnoreCase("description")) {
                                 description = parser.nextText();
                             }
+                            else if (tagName.equalsIgnoreCase("link")) {
+                                link = parser.nextText();
+                            }
+
                         }
                         break;
 
                     case XmlPullParser.END_TAG:
                         if (tagName.equalsIgnoreCase("item")) {
                             pubName = "The Hindu";
-                            items.add(new Model(title, pubName, pubDate, description));
+                            items.add(new Model(title, pubName, pubDate, description,link));
                             insideItem = false;
                         }
                         break;
