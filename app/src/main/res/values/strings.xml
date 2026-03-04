@@ -5,4 +5,7 @@
     <string name="txtContent">Content</string>
     <string name="upButton">Up</string>
     <string name="downButton">Down</string>
+    <string name="txtpublisher">Publisher</string>
+    <string name="contactButton">Contact</string>
+    <string name="txtprivacypolicy">Privacy Policy</string>
 </resources>

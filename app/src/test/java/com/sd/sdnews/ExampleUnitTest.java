@@ -1,4 +1,4 @@
-package com.example.sdnews;
+package com.sd.sdnews;
 
 import org.junit.Test;
 

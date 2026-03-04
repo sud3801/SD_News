@@ -1,9 +1,13 @@
-package com.example.sdnews;
+package com.sd.sdnews;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     RecylerViewAdapter adapter;
     SwipeRefreshLayout swipeRefresh;
-
+    TextView privacyPolicy;
 
     public void buttonDownScroll(View view){
         recyclerView.scrollBy(0,recyclerView.getWidth());
@@ -26,6 +30,14 @@ public class MainActivity extends AppCompatActivity {
     public void buttonUpScroll(View view){
         recyclerView.scrollBy(0,-recyclerView.getWidth());
     }
+    public void buttonContact(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Contact Me");
+        builder.setMessage("Reach me at: \n\nsudarshan.cse065@gmail.com");
+        builder.setPositiveButton("Ok",null);
+        builder.show();
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +45,17 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         swipeRefresh = findViewById(R.id.swipeRefresh);
         recyclerView = findViewById(R.id.mRecyclerView);
+        privacyPolicy = findViewById(R.id.privacyPolicy);
         loadNews();
         swipeRefresh.setOnRefreshListener(this::loadNews);
+        privacyPolicy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW,
+                        Uri.parse("https://sites.google.com/view/sdnews-privacypolicy/home"));
+                startActivity(browserIntent);
+            }
+        });
     }
     private void loadNews(){
 
@@ -52,5 +73,6 @@ public class MainActivity extends AppCompatActivity {
         swipeRefresh.setRefreshing(false);
         Toast.makeText(MainActivity.this, "News Updated..!!", Toast.LENGTH_SHORT).show();
     }
+
 }
 

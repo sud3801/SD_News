@@ -1,12 +1,12 @@
-package com.example.sdnews;
+package com.sd.sdnews;
 
 import android.content.Context;
-import android.text.Html;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -31,10 +31,11 @@ public class RecylerViewAdapter extends RecyclerView.Adapter<RecylerViewAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull RecylerViewAdapter.MyViewHolder holder, int position) {
+        Model currentItem = Model.get(position);
         holder.txtTitle.setText(Model.get(position).getTitle());
+        holder.txtPublisher.setText(Model.get(position).getPublisher());
         holder.txtDate.setText(Model.get(position).getDate());
         holder.txtContent.setText(Model.get(position).getContent());
-
     }
 
     @Override
@@ -45,9 +46,11 @@ public class RecylerViewAdapter extends RecyclerView.Adapter<RecylerViewAdapter.
         TextView txtTitle;
         TextView txtDate;
         TextView txtContent;
+        TextView txtPublisher;
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             txtTitle =itemView.findViewById(R.id.txtTitle);
+            txtPublisher = itemView.findViewById(R.id.txtPublisher);
             txtDate = itemView.findViewById(R.id.txtDate);
             txtContent = itemView.findViewById(R.id.txtContent);
         }

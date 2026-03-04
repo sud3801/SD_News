@@ -38,6 +38,17 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/txtPublisher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/txtpublisher"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:layout_marginBottom="10dp"
+                app:layout_constraintBottom_toTopOf="@+id/txtDate"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtTitle" />
 
             <TextView
                 android:id="@+id/txtDate"
@@ -47,7 +58,7 @@
                 android:textColor="@color/darkBlue"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/txtTitle"
+                app:layout_constraintTop_toBottomOf="@+id/txtPublisher"
                 />
 
             <TextView

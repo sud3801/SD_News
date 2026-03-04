@@ -1,4 +1,4 @@
-package com.example.sdnews;
+package com.sd.sdnews;
 
 import android.util.Xml;
 
@@ -25,6 +25,7 @@ public class RSSFeedParser {
 
             int eventType = parser.getEventType();
             String title = null;
+            String pubName = null;
             String pubDate = null;
             String description = null;
             boolean insideItem = false;
@@ -49,7 +50,8 @@ public class RSSFeedParser {
 
                     case XmlPullParser.END_TAG:
                         if (tagName.equalsIgnoreCase("item")) {
-                            items.add(new Model(title, pubDate, description));
+                            pubName = "The Hindu";
+                            items.add(new Model(title, pubName, pubDate, description));
                             insideItem = false;
                         }
                         break;
