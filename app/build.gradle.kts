@@ -59,7 +59,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
-    implementation("androidx.swiperefreshlayout:swiperefreshlayout:1.2.0-beta01")
+    implementation(libs.swiperefreshlayout)
     implementation(libs.glide)
     annotationProcessor(libs.glide.compiler)
     testImplementation(libs.junit)
