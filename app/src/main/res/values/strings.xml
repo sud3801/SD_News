@@ -6,7 +6,7 @@
     <string name="upButton">Up</string>
     <string name="downButton">Down</string>
     <string name="txtpublisher">Publisher</string>
-    <string name="contactButton">Contact</string>
     <string name="txtprivacypolicy">Privacy Policy</string>
     <string name="toggle_dark_mode">Toggle Dark Mode</string>
+    <string name="contactButton">Contact Button</string>
 </resources>
