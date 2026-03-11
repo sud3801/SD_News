@@ -57,6 +57,7 @@
                 android:layout_height="wrap_content"
                 android:clickable="true"
                 android:focusable="true"
+                android:paddingStart="8dp"
                 android:paddingEnd="8dp"
                 android:text="@string/txtprivacypolicy"
                 android:textColor="?attr/colorPrimary"

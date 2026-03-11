@@ -75,6 +75,7 @@
 //}
 package com.sd.sdnews;
 
+import android.util.Log;
 import android.util.Xml;
 import org.xmlpull.v1.XmlPullParser;
 import java.io.InputStream;
@@ -83,6 +84,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class RSSFeedParser {
+    private static final String TAG = "RSSFeedParser";
 
     // Original method — keeps backward compatibility
 
@@ -140,7 +142,7 @@ public class RSSFeedParser {
             conn.disconnect();
 
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e(TAG, "Error parsing RSS feed from " + urlString, e);
         }
         return items;
     }

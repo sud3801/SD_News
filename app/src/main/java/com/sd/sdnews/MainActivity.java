@@ -130,7 +130,6 @@ import com.google.android.material.tabs.TabLayoutMediator;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -139,8 +138,6 @@ public class MainActivity extends AppCompatActivity {
 
     private ViewPager2 viewPager;
     private TabLayout categoryTabs;
-    private BottomNavigationView bottomNav;
-    private ImageButton darkModeToggle;
 
     private FeedSource currentSource;
     private final FeedSource[] allSources = FeedSource.getAllSources();
@@ -165,8 +162,8 @@ public class MainActivity extends AppCompatActivity {
 
         viewPager     = findViewById(R.id.viewPager);
         categoryTabs  = findViewById(R.id.categoryTabs);
-        bottomNav     = findViewById(R.id.bottomNav);
-        darkModeToggle = findViewById(R.id.toggle_dark_mode);
+        BottomNavigationView bottomNav = findViewById(R.id.bottomNav);
+        ImageButton darkModeToggle = findViewById(R.id.toggle_dark_mode);
         TextView privacyPolicy = findViewById(R.id.privacyPolicy);
 
         darkModeToggle.setImageResource(

@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/nav_thehindu"
-        android:title="The Hindu"
+        android:title="@string/the_hindu"
         android:icon="@drawable/logo_thehindu" />
     <item android:id="@+id/nav_ndtv"
-        android:title="NDTV"
+        android:title="@string/ndtv"
         android:icon="@drawable/logo_ndtv" />
     <item android:id="@+id/nav_toi"
-        android:title="TOI"
+        android:title="@string/toi"
         android:icon="@drawable/logo_toi" />
 </menu>
