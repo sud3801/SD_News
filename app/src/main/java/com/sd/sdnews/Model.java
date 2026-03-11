@@ -1,12 +1,11 @@
 package com.sd.sdnews;
 
 public class Model {
-    String title;
-    String date;
-    String content;
-    String publisher;
-
-    String link;
+    private final String title;
+    private final String date;
+    private final String content;
+    private final String publisher;
+    private final String link;
 
     public Model(String title, String publisher, String date, String content, String link) {
         this.title = title;
