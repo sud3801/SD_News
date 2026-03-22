@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/colorSurface"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
+    android:paddingTop="16dp"
+    android:paddingBottom="24dp">
+
+    <!-- Drag handle -->
+    <View
+        android:id="@+id/dragHandle"
+        android:layout_width="40dp"
+        android:layout_height="4dp"
+        android:background="@color/darkBlue"
+        android:alpha="0.3"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Source name -->
+    <TextView
+        android:id="@+id/sheetSource"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textColor="?attr/colorPrimary"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:letterSpacing="0.1"
+        app:layout_constraintTop_toBottomOf="@id/dragHandle"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Date -->
+    <TextView
+        android:id="@+id/sheetDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:textColor="?attr/colorOnSurface"
+        android:alpha="0.5"
+        android:textSize="11sp"
+        app:layout_constraintTop_toBottomOf="@id/sheetSource"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/sheetTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textColor="?attr/colorOnSurface"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:lineSpacingExtra="2dp"
+        app:layout_constraintTop_toBottomOf="@id/sheetDate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Divider -->
+    <View
+        android:id="@+id/divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="12dp"
+        android:background="?attr/colorOnSurface"
+        android:alpha="0.1"
+        app:layout_constraintTop_toBottomOf="@id/sheetTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Summary -->
+    <TextView
+        android:id="@+id/sheetDescription"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:textColor="?attr/colorOnSurface"
+        android:textSize="15sp"
+        android:lineSpacingExtra="4dp"
+        app:layout_constraintTop_toBottomOf="@id/divider"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Read Full Article button -->
+    <Button
+        android:id="@+id/btnReadFull"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/read_full_article"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@id/sheetDescription"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

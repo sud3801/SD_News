@@ -14,6 +14,9 @@ Unlike most other cluttered news apps, SD News delivers information in a clean a
 - 📲 Modern Android UI with RecyclerView + CardView
 - 🔄 Pull-to-refresh functionality
 - 🧭 Bottom Navigation Bar for switching sources
+- 📖 Bottom Sheet article preview — tap any card to read the summary instantly
+- 🌐 In-app Reader Mode — clean, ad-free full article view powered by Mozilla Readability
+- 🔗 Share articles with SD News branding via any app (WhatsApp, Telegram, SMS...)
 - 🎯 Clean, minimal, straight to the point..!
 
 ---
@@ -25,6 +28,23 @@ Unlike most other cluttered news apps, SD News delivers information in a clean a
 | The Hindu | Top Stories, World, Science, Technology, Sports |
 | NDTV | Top Stories, World, Science, Technology, Sports |
 | Times of India | Top Stories, World, Science, Technology, Sports |
+
+---
+
+## 📖 How Reading Works
+
+```
+Tap any news card
+        ↓
+Bottom Sheet slides up — shows source, date, headline, and RSS summary
+        ↓
+        ├── Tap "Share"             → share article with SD News branding
+        └── Tap "Read Full Article" → opens in-app Reader Mode
+                        ↓
+                Clean, ad-free article view
+                powered by Mozilla Readability.js
+                Respects your dark / light theme
+```
 
 ---
 
@@ -59,12 +79,15 @@ _Add screenshots of your app's main screen view here_
 ## ⚙️ Tech Stack
 
 - 📱 Android (Java)
-- 📰 RSS Feed Parsing (XML)
+- 📰 RSS Feed Parsing (XML) — with CDATA, namespace, and Atom support
 - 📜 RecyclerView + CardView
 - 🔄 SwipeRefreshLayout
 - 🧭 ViewPager2 + TabLayout (category tabs)
 - 🗂️ Bottom Navigation Bar (source switching)
+- 📋 Material Bottom Sheet (article preview)
+- 🌐 WebView + Mozilla Readability.js (in-app reader mode)
 - 🌙 AppCompatDelegate (Dark Mode)
+- 🔗 Android Intent Share Sheet (article sharing)
 - 🌐 Internet Permission Handling
 
 ---
@@ -77,8 +100,11 @@ _Add screenshots of your app's main screen view here_
 | ✅ Phase 1 | Category tabs (Top Stories, World, Science, Tech, Sports) | Done |
 | ✅ Phase 1 | Dark Mode | Done |
 | ✅ Phase 1 | Bottom Navigation Bar | Done |
-| 🔄 Phase 2 | Better RSS parser (CDATA, Atom, edge cases) | In Progress |
-| 🔜 Phase 3 | Share to WhatsApp | Planned |
+| ✅ Phase 2 | Better RSS parser (CDATA, namespaces, Atom, edge cases) | Done |
+| ✅ Phase 2 | Bottom Sheet article preview | Done |
+| ✅ Phase 2 | In-app Reader Mode (Mozilla Readability.js) | Done |
+| ✅ Phase 2 | Share articles with SD News branding | Done |
+| 🔜 Phase 3 | Android App Links (deep linking) | Planned |
 | 🔜 Phase 4 | Push Notifications (Firebase FCM) | Planned |
 | 🔜 Phase 5 | Offline Reading (Room DB cache) | Planned |
 
