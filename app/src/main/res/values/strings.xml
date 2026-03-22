@@ -13,5 +13,7 @@
     <string name="ndtv">NDTV</string>
     <string name="toi">TOI</string>
     <string name="read_full_article">Read Full Article</string>
+    <string name="share">🔗 Share</string>
+    <string name="read_full">Read Full →</string>
 
 </resources>

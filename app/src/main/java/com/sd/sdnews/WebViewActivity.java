@@ -1,7 +1,10 @@
 package com.sd.sdnews;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
@@ -14,57 +17,63 @@ import androidx.appcompat.widget.Toolbar;
 
 public class WebViewActivity extends AppCompatActivity {
 
-    public static final String EXTRA_URL        = "article_url";
-    public static final String EXTRA_TITLE      = "article_title";
-    public static final String EXTRA_SOURCE     = "article_source";
-    public static final String EXTRA_DATE       = "article_date";
+    public static final String EXTRA_URL    = "article_url";
+    public static final String EXTRA_TITLE  = "article_title";
+    public static final String EXTRA_SOURCE = "article_source";
+    public static final String EXTRA_DATE   = "article_date";
 
-    private static final String PREFS_NAME   = "SDNewsPrefs";
+    private static final String PREFS_NAME    = "SDNewsPrefs";
     private static final String KEY_DARK_MODE = "darkMode";
 
     private WebView webView;
     private ProgressBar progressBar;
+
+    // Store these for use in share
+    private String articleUrl;
+    private String articleTitle;
+    private String articleSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_webview);
 
-        // Toolbar — back button
+        // Cache extras for share
+        articleUrl    = getIntent().getStringExtra(EXTRA_URL);
+        articleTitle  = getIntent().getStringExtra(EXTRA_TITLE);
+        articleSource = getIntent().getStringExtra(EXTRA_SOURCE);
+
+        // Toolbar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            // Show source name as toolbar title
-            String source = getIntent().getStringExtra(EXTRA_SOURCE);
-            getSupportActionBar().setTitle(source != null ? source : "Article");
+            getSupportActionBar().setTitle(
+                    articleSource != null ? articleSource : "Article");
         }
         toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
         progressBar = findViewById(R.id.progressBar);
         webView     = findViewById(R.id.webView);
 
-        // Required for Readability.js to run
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setDomStorageEnabled(true);
 
-        // Show/hide progress bar as page loads
         webView.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
                 progressBar.setProgress(newProgress);
-                progressBar.setVisibility(newProgress < 100 ? View.VISIBLE : View.GONE);
+                progressBar.setVisibility(
+                        newProgress < 100 ? View.VISIBLE : View.GONE);
             }
         });
 
-        // Once page finishes loading, inject Readability + our reader CSS
         webView.setWebViewClient(new WebViewClient() {
             @Override
             public void onPageFinished(WebView view, String url) {
                 injectReaderMode(view);
             }
 
-            // Keep all navigation inside the WebView
             @Override
             public boolean shouldOverrideUrlLoading(WebView view,
                                                     WebResourceRequest request) {
@@ -73,45 +82,79 @@ public class WebViewActivity extends AppCompatActivity {
             }
         });
 
-        String url = getIntent().getStringExtra(EXTRA_URL);
-        if (url != null && !url.isEmpty()) {
-            webView.loadUrl(url);
+        if (articleUrl != null && !articleUrl.isEmpty()) {
+            webView.loadUrl(articleUrl);
         } else {
-            finish(); // nothing to show
+            finish();
         }
     }
 
+    // ── Share button in toolbar ──────────────────────────────────────────────
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.webview_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.action_share) {
+            shareArticle();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void shareArticle() {
+        StringBuilder sb = new StringBuilder();
+
+        // Source
+        if (articleSource != null && !articleSource.isEmpty()) {
+            sb.append("📰 ").append(articleSource).append("\n\n");
+        }
+
+        // Headline
+        if (articleTitle != null && !articleTitle.isEmpty()) {
+            sb.append(articleTitle).append("\n\n");
+        }
+
+        // Article URL
+        if (articleUrl != null && !articleUrl.isEmpty()) {
+            sb.append("Read more: ").append(articleUrl).append("\n\n");
+        }
+
+        // SD News branding
+        sb.append("Shared via SD News\n");
+        sb.append("Get it on Google Play: ");
+        sb.append("https://play.google.com/store/apps/details?id=com.sd.sdnews");
+
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, sb.toString());
+        startActivity(Intent.createChooser(shareIntent, "Share via..."));
+    }
+
+    // ── Reader Mode injection ────────────────────────────────────────────────
+
     private void injectReaderMode(WebView view) {
-        // Read dark mode preference
         SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         boolean isDark = prefs.getBoolean(KEY_DARK_MODE, false);
         String darkClass = isDark ? "dark" : "";
 
-        // Safely escape metadata for JavaScript
-        String title  = escapeJs(getIntent().getStringExtra(EXTRA_TITLE));
-        String source = escapeJs(getIntent().getStringExtra(EXTRA_SOURCE));
+        String title  = escapeJs(articleTitle);
+        String source = escapeJs(articleSource);
         String date   = escapeJs(getIntent().getStringExtra(EXTRA_DATE));
 
-        // Build the JS injection:
-        // 1. Load Readability.js from assets
-        // 2. Run it on the current document
-        // 3. Replace page content with clean reader HTML + our CSS
         String js = "(function() {" +
-
-                // --- Load Readability.js from assets ---
                 "var script = document.createElement('script');" +
                 "script.src = 'file:///android_asset/Readability.js';" +
                 "script.onload = function() {" +
-
-                // --- Run Readability ---
                 "var documentClone = document.cloneNode(true);" +
                 "var reader = new Readability(documentClone);" +
                 "var article = reader.parse();" +
                 "var body = article ? article.content : " +
-                "'<p>Could not extract article. " +
-                "Try the original link.</p>';" +
-
-                // --- Build clean reader page ---
+                "'<p>Could not extract article. Try the original link.</p>';" +
                 "var html = '<!DOCTYPE html><html><head>" +
                 "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">" +
                 "<link rel=\"stylesheet\" href=\"file:///android_asset/reader.css\">" +
@@ -123,8 +166,6 @@ public class WebViewActivity extends AppCompatActivity {
                 "<div id=\"article-meta\">" + date + "</div>" +
                 "<div id=\"article-body\">' + body + '</div>" +
                 "</div></body></html>';" +
-
-                // --- Replace entire page with reader HTML ---
                 "document.open();" +
                 "document.write(html);" +
                 "document.close();" +
@@ -135,9 +176,6 @@ public class WebViewActivity extends AppCompatActivity {
         view.evaluateJavascript(js, null);
     }
 
-    /**
-     * Escapes a string for safe embedding inside a JavaScript string literal.
-     */
     private String escapeJs(String input) {
         if (input == null) return "";
         return input
@@ -150,7 +188,6 @@ public class WebViewActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        // If WebView can go back (e.g. user tapped a link), go back in WebView
         if (webView.canGoBack()) {
             webView.goBack();
         } else {

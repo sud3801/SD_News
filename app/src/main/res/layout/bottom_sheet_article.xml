@@ -86,15 +86,37 @@
         app:layout_constraintEnd_toEndOf="parent" />
 
     <!-- Read Full Article button -->
-    <Button
-        android:id="@+id/btnReadFull"
+    <!-- Remove the existing btnReadFull and replace with this -->
+    <LinearLayout
+        android:id="@+id/buttonRow"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
         android:layout_marginTop="20dp"
-        android:text="@string/read_full_article"
-        android:textSize="14sp"
+        android:weightSum="2"
         app:layout_constraintTop_toBottomOf="@id/sheetDescription"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <Button
+            android:id="@+id/btnShare"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/paleYellow"
+            android:text="@string/share"
+            android:textSize="13sp" />
+
+        <Button
+            android:id="@+id/btnReadFull"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:text="@string/read_full"
+            android:textSize="13sp" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
