@@ -110,6 +110,7 @@ package com.sd.sdnews;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -159,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        scheduleDailyNotificationIfNeeded(prefs);
         viewPager     = findViewById(R.id.viewPager);
         categoryTabs  = findViewById(R.id.categoryTabs);
         BottomNavigationView bottomNav = findViewById(R.id.bottomNav);
@@ -197,6 +198,56 @@ public class MainActivity extends AppCompatActivity {
             }
             return false;
         });
+    }
+    private void scheduleDailyNotificationIfNeeded(SharedPreferences prefs) {
+        boolean isScheduled = prefs.getBoolean("notification_scheduled", false);
+        if (isScheduled) return;
+
+        // Calculate initial delay until next 8:00 AM
+        java.util.Calendar calendar = java.util.Calendar.getInstance();
+        java.util.Calendar target   = java.util.Calendar.getInstance();
+        target.set(java.util.Calendar.HOUR_OF_DAY, 8);
+        target.set(java.util.Calendar.MINUTE,      0);
+        target.set(java.util.Calendar.SECOND,      0);
+
+        // If 8AM has already passed today, schedule for tomorrow
+        if (calendar.after(target)) {
+            target.add(java.util.Calendar.DAY_OF_YEAR, 1);
+        }
+
+        long initialDelay = target.getTimeInMillis()
+                - calendar.getTimeInMillis();
+
+        // Build the periodic work request — repeats every 24 hours
+        androidx.work.PeriodicWorkRequest dailyWorkRequest =
+                new androidx.work.PeriodicWorkRequest.Builder(
+                        DailyNewsWorker.class,
+                        24,
+                        java.util.concurrent.TimeUnit.HOURS
+                )
+                        .setInitialDelay(initialDelay, java.util.concurrent.TimeUnit.MILLISECONDS)
+                        .build();
+
+        // Enqueue uniquely — prevents duplicate workers if app reinstalled
+        androidx.work.WorkManager.getInstance(this).enqueueUniquePeriodicWork(
+                "daily_news_notification",
+                androidx.work.ExistingPeriodicWorkPolicy.KEEP,
+                dailyWorkRequest
+        );
+
+        // Mark as scheduled so we don't reschedule on every launch
+        prefs.edit().putBoolean("notification_scheduled", true).apply();
+
+        // Request notification permission on Android 13+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS)
+                    != android.content.pm.PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(
+                        new String[]{android.Manifest.permission.POST_NOTIFICATIONS},
+                        1001
+                );
+            }
+        }
     }
 
     private void loadSource(FeedSource source) {
