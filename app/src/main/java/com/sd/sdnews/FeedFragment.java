@@ -80,6 +80,7 @@
 //}
 package com.sd.sdnews;
 
+
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -97,6 +98,10 @@ public class FeedFragment extends Fragment {
 
     private static final String ARG_URL    = "url";
     private static final String ARG_SOURCE = "source";
+
+    private RecyclerView recyclerView;
+
+
 
     public static FeedFragment newInstance(String url, String sourceName) {
         FeedFragment f = new FeedFragment();
@@ -118,7 +123,8 @@ public class FeedFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         SwipeRefreshLayout swipeRefresh = view.findViewById(R.id.swipeRefresh);
-        RecyclerView recyclerView = view.findViewById(R.id.mRecyclerView);
+        //RecyclerView recyclerView = view.findViewById(R.id.mRecyclerView);
+        recyclerView = view.findViewById(R.id.mRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
         String url        = requireArguments().getString(ARG_URL);
@@ -141,5 +147,10 @@ public class FeedFragment extends Fragment {
                 Toast.makeText(requireContext(), "Updated!", Toast.LENGTH_SHORT).show();
             });
         }).start();
+    }
+    public void scrollToTop() {
+        if (recyclerView != null) {
+            recyclerView.smoothScrollToPosition(0);
+        }
     }
 }

@@ -198,6 +198,14 @@ public class MainActivity extends AppCompatActivity {
             }
             return false;
         });
+        findViewById(R.id.title).setOnClickListener(v -> {
+            // Get the current fragment from ViewPager2
+            androidx.fragment.app.Fragment fragment = getSupportFragmentManager()
+                    .findFragmentByTag("f" + viewPager.getCurrentItem());
+            if (fragment instanceof FeedFragment) {
+                ((FeedFragment) fragment).scrollToTop();
+            }
+        });
     }
     private void scheduleDailyNotificationIfNeeded(SharedPreferences prefs) {
         boolean isScheduled = prefs.getBoolean("notification_scheduled", false);

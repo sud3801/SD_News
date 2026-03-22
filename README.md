@@ -2,7 +2,7 @@
 
 Welcome to **SD News**, a clean, simple, and lightweight Android news application built using **RSS feeds**.  
 Unlike most other cluttered news apps, SD News delivers information in a clean and distraction-free interface, helping users stay updated with the latest headlines effortlessly.
-
+ 
 ---
 
 ## ✨ Features
@@ -17,6 +17,7 @@ Unlike most other cluttered news apps, SD News delivers information in a clean a
 - 📖 Bottom Sheet article preview — tap any card to read the summary instantly
 - 🌐 In-app Reader Mode — clean, ad-free full article view powered by Mozilla Readability
 - 🔗 Share articles with SD News branding via any app (WhatsApp, Telegram, SMS...)
+- 🔔 Daily news reminder notification at 8:00 AM — powered by WorkManager
 - 🎯 Clean, minimal, straight to the point..!
 
 ---
@@ -28,7 +29,7 @@ Unlike most other cluttered news apps, SD News delivers information in a clean a
 | The Hindu | Top Stories, World, Science, Technology, Sports |
 | NDTV | Top Stories, World, Science, Technology, Sports |
 | Times of India | Top Stories, World, Science, Technology, Sports |
-
+ 
 ---
 
 ## 📖 How Reading Works
@@ -44,8 +45,19 @@ Bottom Sheet slides up — shows source, date, headline, and RSS summary
                 Clean, ad-free article view
                 powered by Mozilla Readability.js
                 Respects your dark / light theme
+                        ↓
+                Share button in toolbar
+                → share directly from the article
 ```
+ 
+---
 
+## 🔔 Daily Notifications
+
+SD News reminds you every morning at **8:00 AM** to catch up on the day's news.  
+Notifications rotate daily with fresh messages — no repetition, no spam.  
+Powered by **WorkManager** — no backend or internet required to deliver them.
+ 
 ---
 
 ## 📖 Why RSS is Better than APIs for News Apps
@@ -60,12 +72,11 @@ Bottom Sheet slides up — shows source, date, headline, and RSS summary
 
 **→ RSS enables greater control, decentralization, and no dependency on third-party backend APIs.**  
 This makes SD News more sustainable, faster, and simpler to maintain.
-
+ 
 ---
 
 ## 📷 Screenshots
 
-_Add screenshots of your app's main screen view here_
 
 | Home Screen |
 |:------------|
@@ -74,6 +85,10 @@ _Add screenshots of your app's main screen view here_
 | Dark Mode |
 |:------------|
 | ![Home](screenshots/dark_mode_v1.1.1.png) |
+
+| Material Bottom Sheet                        |
+|:---------------------------------------------|
+| ![Home](screenshots/bottom_sheet_v1.4.1.png) |
 ---
 
 ## ⚙️ Tech Stack
@@ -88,6 +103,7 @@ _Add screenshots of your app's main screen view here_
 - 🌐 WebView + Mozilla Readability.js (in-app reader mode)
 - 🌙 AppCompatDelegate (Dark Mode)
 - 🔗 Android Intent Share Sheet (article sharing)
+- 🔔 WorkManager (daily notification scheduling)
 - 🌐 Internet Permission Handling
 
 ---
@@ -104,11 +120,9 @@ _Add screenshots of your app's main screen view here_
 | ✅ Phase 2 | Bottom Sheet article preview | Done |
 | ✅ Phase 2 | In-app Reader Mode (Mozilla Readability.js) | Done |
 | ✅ Phase 2 | Share articles with SD News branding | Done |
-| 🔜 Phase 3 | Android App Links (deep linking) | Planned |
-| 🔜 Phase 4 | Push Notifications (Firebase FCM) | Planned |
-| 🔜 Phase 5 | Offline Reading (Room DB cache) | Planned |
-
----
+| ✅ Phase 3 | Daily news reminder notifications (WorkManager) | Done |
+| 🔜 Phase 4 | Offline Reading (Room DB cache) | Planned |
+| 🔜 Phase 5 | Android App Links (deep linking) | Planned |
 
 ## 📦 Google Play Store
 
