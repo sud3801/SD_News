@@ -53,7 +53,7 @@ public class FeedSource {
         Map<String, String> urls = new LinkedHashMap<>();
         urls.put("Top Stories", "https://timesofindia.indiatimes.com/rssfeedstopstories.cms");
         urls.put("World",       "https://timesofindia.indiatimes.com/rssfeeds/296589292.cms");
-        urls.put("Science",     "https://timesofindia.indiatimes.com/rssfeeds/-2128672765.cms");
+        urls.put("Education",     "https://timesofindia.indiatimes.com/rssfeeds/913168846.cms");
         urls.put("Technology",  "https://timesofindia.indiatimes.com/rssfeeds/-2128672765.cms");
         urls.put("Sports",      "https://timesofindia.indiatimes.com/rssfeeds/4719148.cms");
         return new FeedSource("Times of India", urls);

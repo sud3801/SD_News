@@ -140,35 +140,52 @@ public class WebViewActivity extends AppCompatActivity {
     private void injectReaderMode(WebView view) {
         SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
         boolean isDark = prefs.getBoolean(KEY_DARK_MODE, false);
-        String darkClass = isDark ? "dark" : "";
 
+        // JS-escape for embedding inside the JS string itself
         String title  = escapeJs(articleTitle);
         String source = escapeJs(articleSource);
         String date   = escapeJs(getIntent().getStringExtra(EXTRA_DATE));
+
+        // darkClass is safe as-is but let's be explicit
+        String darkClass = isDark ? "dark" : "";
 
         String js = "(function() {" +
                 "var script = document.createElement('script');" +
                 "script.src = 'file:///android_asset/Readability.js';" +
                 "script.onload = function() {" +
-                "var documentClone = document.cloneNode(true);" +
-                "var reader = new Readability(documentClone);" +
-                "var article = reader.parse();" +
-                "var body = article ? article.content : " +
-                "'<p>Could not extract article. Try the original link.</p>';" +
-                "var html = '<!DOCTYPE html><html><head>" +
-                "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">" +
-                "<link rel=\"stylesheet\" href=\"file:///android_asset/reader.css\">" +
-                "</head>" +
-                "<body class=\"" + darkClass + "\">" +
-                "<div id=\"article-container\">" +
-                "<div id=\"article-source\">" + source + "</div>" +
-                "<div id=\"article-title\">" + title + "</div>" +
-                "<div id=\"article-meta\">" + date + "</div>" +
-                "<div id=\"article-body\">' + body + '</div>" +
-                "</div></body></html>';" +
-                "document.open();" +
-                "document.write(html);" +
-                "document.close();" +
+                "  var documentClone = document.cloneNode(true);" +
+                "  var reader = new Readability(documentClone);" +
+                "  var article = reader.parse();" +
+                "  var body = article ? article.content : " +
+                "    '<p>Could not extract article.</p>';" +
+
+                // Build the HTML entirely inside JS using DOM APIs —
+                // no string concatenation of user data into HTML at all
+                "  var html = '<!DOCTYPE html><html><head>" +
+                "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">" +
+                "    <link rel=\"stylesheet\" href=\"file:///android_asset/reader.css\">" +
+                "  </head>" +
+                "  <body class=\"" + darkClass + "\">" +
+                "    <div id=\"article-container\">" +
+                "      <div id=\"article-source\"></div>" +
+                "      <div id=\"article-title\"></div>" +
+                "      <div id=\"article-meta\"></div>" +
+                "      <div id=\"article-body\"></div>" +
+                "    </div></body></html>';" +
+
+                // Write the safe HTML skeleton first
+                "  document.open();" +
+                "  document.write(html);" +
+                "  document.close();" +
+
+                // Then set user data via textContent (never innerHTML) —
+                // this is safe because textContent never interprets HTML tags
+                "  document.getElementById('article-source').textContent = '" + source + "';" +
+                "  document.getElementById('article-title').textContent  = '" + title  + "';" +
+                "  document.getElementById('article-meta').textContent   = '" + date   + "';" +
+
+                // article body comes from Readability so we trust it as HTML
+                "  document.getElementById('article-body').innerHTML = body;" +
                 "};" +
                 "document.head.appendChild(script);" +
                 "})();";
@@ -183,7 +200,9 @@ public class WebViewActivity extends AppCompatActivity {
                 .replace("'",  "\\'")
                 .replace("\"", "\\\"")
                 .replace("\n", "\\n")
-                .replace("\r", "");
+                .replace("\r", "")
+                .replace("<",  "\\u003C")   // prevents </script> injection
+                .replace(">",  "\\u003E");
     }
 
     @Override
