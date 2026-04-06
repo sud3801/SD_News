@@ -51,7 +51,7 @@ public class WebViewActivity extends AppCompatActivity {
             getSupportActionBar().setTitle(
                     articleSource != null ? articleSource : "Article");
         }
-        toolbar.setNavigationOnClickListener(v -> onBackPressed());
+        toolbar.setNavigationOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
 
         progressBar = findViewById(R.id.progressBar);
         webView     = findViewById(R.id.webView);
@@ -65,6 +65,17 @@ public class WebViewActivity extends AppCompatActivity {
                 progressBar.setProgress(newProgress);
                 progressBar.setVisibility(
                         newProgress < 100 ? View.VISIBLE : View.GONE);
+            }
+        });
+
+        getOnBackPressedDispatcher().addCallback(this, new androidx.activity.OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if (webView.canGoBack()) {
+                    webView.goBack();
+                } else {
+                    finish();
+                }
             }
         });
 
